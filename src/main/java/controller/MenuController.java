@@ -118,12 +118,15 @@ public class MenuController {
                     }
                     case 5 -> {
                         System.out.println("Añadir pasajero a coche");
+                        pasajeroController.modificarPasajeroCoche();
                     }
                     case 6 -> {
                         System.out.println("Eliminar pasajero de coche");
+                        pasajeroController.borrarPasajeroCoche();
                     }
                     case 7 -> {
                         System.out.println("Listar pasajeros de un coche");
+                        pasajeroController.listarPasajerosCoche();
                     }
                     case 8 -> {
                         System.out.println("Volver menu principal");

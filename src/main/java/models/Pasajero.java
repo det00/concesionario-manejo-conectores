@@ -20,4 +20,10 @@ public class Pasajero {
         this.peso = peso;
         this.coche = coche;
     }
+
+    public Pasajero(String nombre, int edad, double peso) {
+        this.nombre = nombre;
+        this.edad = edad;
+        this.peso = peso;
+    }
 }

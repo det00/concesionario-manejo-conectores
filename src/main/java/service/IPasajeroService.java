@@ -12,6 +12,6 @@ public interface IPasajeroService {
     Pasajero buscarPasajero(long id) throws SQLException;
     List<Pasajero> listarPasajeros() throws SQLException;
     boolean insertarPasajeroCoche(Pasajero pasajero, Coche coche) throws SQLException;
-    boolean borrarPasajeroCoche(Pasajero pasajero, Coche coche);
+    boolean borrarPasajeroCoche(Pasajero pasajero) throws SQLException;
     List<Pasajero> listarPasajerosCoche(Coche coche);
 }

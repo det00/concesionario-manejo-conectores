@@ -57,13 +57,25 @@ public class PasajeroController {
         }
     }
 
-    public void borrarPasajeroCoche() throws SQLException {
+    public void borrarPasajeroCoche() {
+        listarPasajeros();
         System.out.print("ID del pasajero a borrar: ");
         long id = Long.parseLong(scanner.nextLine());
-        if (pasajeroDao.buscarPasajero(id) != null) {
-
-        } else {
-            System.out.println("No hay pasajero con id " + id);
+        Pasajero p = null;
+        try {
+            p = pasajeroDao.buscarPasajero(id);
+            if (p != null) {
+                if (pasajeroDao.borrarPasajeroCoche(p)) {
+                    System.out.println("Pasajero actualizado");
+                } else {
+                    System.out.println("No se ha podido actualizar el pasajero");
+                }
+            } else {
+                System.out.println("No hay pasajero con id " + id);
+            }
+        } catch (
+                SQLException e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -97,25 +109,56 @@ public class PasajeroController {
     }
 
     public void modificarPasajeroCoche() {
-
-        System.out.print("ID del pasajero a asignar: ");
-        long id = Long.parseLong(scanner.nextLine());
         try {
-            Pasajero p = pasajeroDao.buscarPasajero(id);
+            listarPasajeros();
+            System.out.print("ID del pasajero a asignar: ");
+            long idPasajero = Long.parseLong(scanner.nextLine());
+            Pasajero p = pasajeroDao.buscarPasajero(idPasajero);
             if (p != null) {
                 System.out.println("COCHES DISPONIBLES");
-                for (Coche c: cocheDao.cochesDisponibles()){
-                    if (c.ge)
+                for (Coche c : cocheDao.listarCoches()) {
+                    System.out.println(c);
                 }
                 System.out.println("¿En que coche lo quieres asignar?");
-
+                long idCoche = Long.parseLong(scanner.nextLine());
+                Coche c = cocheDao.buscarCoche(idCoche);
+                if (c != null) {
+                    if (pasajeroDao.insertarPasajeroCoche(p, c)) {
+                        System.out.println("Pasajero asignado correctamente");
+                    }
+                } else {
+                    System.out.println("No existe coche con id " + idCoche);
+                }
             } else {
-                System.out.println("No hay pasajero con id " + id);
+                System.out.println("No hay pasajero con id " + idPasajero);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-
+    public void listarPasajerosCoche() {
+        try {
+            System.out.println("SELECCIONA UN COCHE");
+            for (Coche c : cocheDao.listarCoches()) {
+                System.out.println(c);
+            }
+            Coche c = cocheDao.buscarCoche(Long.parseLong(scanner.nextLine()));
+            if (c != null) {
+                if (!pasajeroDao.listarPasajerosCoche(c).isEmpty()) {
+                    System.out.println("PASAJEROS DEL COCHE\n" + c);
+                    for (Pasajero p : pasajeroDao.listarPasajerosCoche(c)) {
+                        System.out.println(p);
+                    }
+                } else {
+                    System.out.println("El coche no tiene pasajeros");
+                }
+            } else {
+                System.out.println("No existe el coche");
+            }
+        } catch (
+                SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

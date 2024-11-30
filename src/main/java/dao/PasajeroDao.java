@@ -98,12 +98,41 @@ public class PasajeroDao implements IPasajeroService {
     }
 
     @Override
-    public boolean borrarPasajeroCoche(Pasajero pasajero, Coche coche) {
-        return false;
+    public boolean borrarPasajeroCoche(Pasajero pasajero) throws SQLException {
+        String query = String.format("UPDATE %s SET %s = ? WHERE %s = ?",
+        SchemaDB.TAB_PAS,
+                SchemaDB.COL_PAS_CAR,
+                SchemaDB.COL_ID);
+        preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setObject(1,null);
+        preparedStatement.setLong(2, pasajero.getId());
+        return preparedStatement.executeUpdate()>0;
     }
 
     @Override
     public List<Pasajero> listarPasajerosCoche(Coche coche) {
-        return List.of();
+        List<Pasajero> listaPasajeros = new ArrayList<>();
+        String query = String.format("SELECT * FROM %s WHERE %s = ?",
+                SchemaDB.TAB_PAS,
+                SchemaDB.COL_PAS_CAR);
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setLong(1, coche.getId());
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                Pasajero p = new Pasajero(
+                        resultSet.getLong(SchemaDB.COL_ID),
+                        resultSet.getString(SchemaDB.COL_PAS_NAME),
+                        resultSet.getInt(SchemaDB.COL_PAS_AGE),
+                        resultSet.getDouble(SchemaDB.COL_PAS_WEIGHT),
+                        resultSet.getInt(SchemaDB.COL_PAS_CAR)
+                );
+                listaPasajeros.add(p);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listaPasajeros;
     }
+
 }
