@@ -83,7 +83,15 @@ public class CocheDao implements ICocheService {
     @Override
     public List<Coche> listarCoches() throws SQLException {
         List<Coche> listaCoches = new ArrayList<>();
-        String query = String.format("SELECT * FROM %s", SchemaDB.TAB_CAR);
+        String query = String.format("SELECT %s.*, (5 - COUNT(%s.%s)) AS %s " +
+                                     "FROM %s " +
+                                     "LEFT JOIN %s ON %s.%s = %s.%s " +
+                                     "GROUP BY %s.%s ",
+                SchemaDB.TAB_CAR, SchemaDB.TAB_PAS, SchemaDB.COL_ID, SchemaDB.COL_PLA_DISP,
+                SchemaDB.TAB_CAR,
+                SchemaDB.TAB_PAS, SchemaDB.TAB_CAR, SchemaDB.COL_ID, SchemaDB.TAB_PAS, SchemaDB.COL_PAS_CAR,
+                SchemaDB.TAB_CAR, SchemaDB.COL_ID
+        );
         preparedStatement = connection.prepareStatement(query);
         resultSet = preparedStatement.executeQuery();
         while (resultSet.next()){
@@ -92,7 +100,8 @@ public class CocheDao implements ICocheService {
                     resultSet.getString(SchemaDB.COL_CAR_MAT),
                     resultSet.getString(SchemaDB.COL_CAR_MARC),
                     resultSet.getString(SchemaDB.COL_CAR_MOD),
-                    resultSet.getString(SchemaDB.COL_CAR_COLOR));
+                    resultSet.getString(SchemaDB.COL_CAR_COLOR),
+                    resultSet.getInt(SchemaDB.COL_PLA_DISP));
             listaCoches.add(c);
         }
         return listaCoches;
@@ -101,9 +110,17 @@ public class CocheDao implements ICocheService {
     @Override
     public List<Coche> cochesDisponibles() throws SQLException {
         List<Coche> listaCoches = new ArrayList<>();
-        String query = String.format("SELECT * FROM %s WHERE %s <= %s",
+        String query = String.format("SELECT %s.*, (5 - COUNT(%s.%s)) AS %s " +
+                                     "FROM %s " +
+                                     "LEFT JOIN %s ON %s.%s = %s.%s " +
+                                     "GROUP BY %s.%s " +
+                                     "HAVING COUNT(%s.%s) < 5;",
+                SchemaDB.TAB_CAR, SchemaDB.TAB_PAS, SchemaDB.COL_ID, SchemaDB.COL_PLA_DISP,
                 SchemaDB.TAB_CAR,
-                SchemaDB.COL_PAS_CAR, 5);
+                SchemaDB.TAB_PAS, SchemaDB.TAB_CAR, SchemaDB.COL_ID, SchemaDB.TAB_PAS, SchemaDB.COL_PAS_CAR,
+                SchemaDB.TAB_CAR, SchemaDB.COL_ID,
+                SchemaDB.TAB_PAS, SchemaDB.COL_PAS_CAR
+                );
         preparedStatement = connection.prepareStatement(query);
         resultSet = preparedStatement.executeQuery();
         while (resultSet.next()){
@@ -112,7 +129,8 @@ public class CocheDao implements ICocheService {
                     resultSet.getString(SchemaDB.COL_CAR_MAT),
                     resultSet.getString(SchemaDB.COL_CAR_MARC),
                     resultSet.getString(SchemaDB.COL_CAR_MOD),
-                    resultSet.getString(SchemaDB.COL_CAR_COLOR));
+                    resultSet.getString(SchemaDB.COL_CAR_COLOR),
+                    resultSet.getInt(SchemaDB.COL_PLA_DISP));
             listaCoches.add(c);
         }
         return listaCoches;

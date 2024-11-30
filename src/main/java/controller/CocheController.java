@@ -28,13 +28,17 @@ public class CocheController {
         }
     }
 
-    public void buscarCoche() throws SQLException {
+    public void buscarCoche(){
         System.out.println("ID del coche: ");
         long id = Long.parseLong(scanner.nextLine());
-        if (cocheDao.buscarCoche(id) != null) {
-            System.out.println(cocheDao.buscarCoche(id));
-        } else {
-            System.out.println("No se ha encontrado coche con ID " + id);
+        try {
+            if (cocheDao.buscarCoche(id) != null) {
+                System.out.println(cocheDao.buscarCoche(id));
+            } else {
+                System.out.println("No se ha encontrado coche con ID " + id);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -48,18 +52,22 @@ public class CocheController {
         }
     }
 
-    public void borrarCoche() throws SQLException {
+    public void borrarCoche(){
         System.out.print("ID del coche a borrar: ");
         long id = Long.parseLong(scanner.nextLine());
-        if (cocheDao.buscarCoche(id) != null) {
-            cocheDao.borrarCoche(id);
-            System.out.println("Coche borrado correctamente");
-        } else {
-            System.out.println("No hay coche con id " + id);
+        try {
+            if (cocheDao.buscarCoche(id) != null) {
+                cocheDao.borrarCoche(id);
+                System.out.println("Coche borrado correctamente");
+            } else {
+                System.out.println("No hay coche con id " + id);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public void actualizarCoche() throws SQLException {
+    public void actualizarCoche(){
         System.out.print("ID del coche a actualizar: ");
         long id = Long.parseLong(scanner.nextLine());
         Coche c = new Coche();
@@ -71,12 +79,16 @@ public class CocheController {
         c.setModelo(scanner.nextLine());
         System.out.print("Color: ");
         c.setColor(scanner.nextLine());
-        if (cocheDao.buscarCoche(id) != null) {
-            cocheDao.modificarCoche(id, c);
-            c.setId(id);
-            System.out.println("Coche modificado: " + c);
-        } else {
-            System.out.println("No hay coche con id " + id);
+        try {
+            if (cocheDao.buscarCoche(id) != null) {
+                cocheDao.modificarCoche(id, c);
+                c.setId(id);
+                System.out.println("Coche modificado: " + c);
+            } else {
+                System.out.println("No hay coche con id " + id);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

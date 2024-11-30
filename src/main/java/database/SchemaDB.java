@@ -15,5 +15,5 @@ public interface SchemaDB {
     String COL_CAR_MARC = "marca";
     String COL_CAR_MOD = "modelo";
     String COL_CAR_COLOR = "color";
-
+    String COL_PLA_DISP = "plazas_disponibles";
 }

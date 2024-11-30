@@ -101,7 +101,7 @@ public class PasajeroController {
                 pasajeroDao.borrarPasajero(id);
                 System.out.println("Pasajero borrado correctamente");
             } else {
-                System.out.println("No hay coche con id " + id);
+                System.out.println("No hay pasajero con id " + id);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -116,7 +116,7 @@ public class PasajeroController {
             Pasajero p = pasajeroDao.buscarPasajero(idPasajero);
             if (p != null) {
                 System.out.println("COCHES DISPONIBLES");
-                for (Coche c : cocheDao.listarCoches()) {
+                for (Coche c : cocheDao.cochesDisponibles()) {
                     System.out.println(c);
                 }
                 System.out.println("¿En que coche lo quieres asignar?");
