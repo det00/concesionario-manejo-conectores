@@ -2,6 +2,8 @@ package controller;
 
 import java.util.Scanner;
 
+//METODOS DEL MENU (MOSTRAR, GESTIONAR OPCIONES...)
+
 public class MenuController {
     PasajeroController pasajeroController = new PasajeroController();
     CocheController cocheController = new CocheController();
@@ -11,7 +13,8 @@ public class MenuController {
     public void ejecutarMenu() {
         gestionMenuCoches();
     }
-    private void menuPrincipal() {
+
+    private void menuCoches() {
         System.out.println("""
                 \s
                  *******************************
@@ -29,7 +32,7 @@ public class MenuController {
                  *******************************\s
                 \s""");
     }
-    private void subMenu() {
+    private void menuPasajeros() {
         salir = false;
         System.out.println("""
                 \s
@@ -51,7 +54,7 @@ public class MenuController {
     }
     private void gestionMenuCoches() {
         do {
-            menuPrincipal();
+            menuCoches();
             salir = false;
             try {
                 int opcion = Integer.parseInt(scanner.nextLine());
@@ -96,7 +99,7 @@ public class MenuController {
     }
     private void gestionMenuPasajeros() {
         do {
-            subMenu();
+            menuPasajeros();
             try {
                 int opcion = Integer.parseInt(scanner.nextLine());
                 switch (opcion) {

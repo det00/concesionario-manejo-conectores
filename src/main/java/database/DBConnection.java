@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBConnection {
-
+    //CONEXION CREADA CON PATRON SINGLETON
     private static Connection connection;
 
     public Connection getConnection(){

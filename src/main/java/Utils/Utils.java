@@ -3,6 +3,9 @@ package Utils;
 import java.util.Scanner;
 
 public class Utils {
+    /*
+    * METODO PROPIO PARA VALIDAD LA ENTRADA DE NUMEROS
+    */
     Scanner scanner = new Scanner(System.in);
     public double validarNumero() {
         boolean esNumero = false;

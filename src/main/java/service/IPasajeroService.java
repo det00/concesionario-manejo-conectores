@@ -5,7 +5,7 @@ import models.Pasajero;
 
 import java.sql.SQLException;
 import java.util.List;
-
+// INTERFACE CON LOS METODOS DE PASAJEROS
 public interface IPasajeroService {
     boolean insertarPasajero(Pasajero pasajero) throws SQLException;
     boolean borrarPasajero(long id) throws SQLException;

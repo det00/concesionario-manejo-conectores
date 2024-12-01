@@ -19,6 +19,8 @@ public class PasajeroDao implements IPasajeroService {
     private ResultSet resultSet;
     private Connection connection;
 
+    //METODOS IMPLEMETADOS DE LA INTERFACE QUE TRABAJAN DIRECTAMENTE CON LA BASE DE DATOS
+    //LAS EXCEPCIONES LAS PASO AL CONTROLLER PARA TRATARLAS ALLI
     public PasajeroDao() {
         connection = new DBConnection().getConnection();
     }

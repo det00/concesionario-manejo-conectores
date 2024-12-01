@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+//METODOS IMPLEMETADOS DE LA INTERFACE QUE TRABAJAN DIRECTAMENTE CON LA BASE DE DATOS
+//LAS EXCEPCIONES LAS PASO AL CONTROLLER PARA TRATARLAS ALLI
 public class CocheDao implements ICocheService {
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;

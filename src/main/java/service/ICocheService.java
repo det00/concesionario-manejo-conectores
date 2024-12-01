@@ -4,7 +4,7 @@ import models.Coche;
 
 import java.sql.SQLException;
 import java.util.List;
-
+//INTERFACE CON LOS MEDOTOS DE COCHE
 public interface ICocheService {
     boolean insertarCoche(Coche coche) throws SQLException;
     Boolean borrarCoche(long id) throws SQLException;

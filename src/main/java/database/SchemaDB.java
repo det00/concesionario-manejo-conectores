@@ -1,5 +1,6 @@
 package database;
 
+//INTERFACE CON TODOS LOS STRINGS DE LA BASE DE DATOS
 public interface SchemaDB {
     String DB_NAME = "blxhn5kyfuug5es9elxa";
     String COL_ID = "id";

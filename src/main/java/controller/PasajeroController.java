@@ -9,6 +9,9 @@ import models.Pasajero;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+
+//METODOS PARA TRABAJAR CON CONSOLA Y PASARLE POR PARAMETROS AL DAO LO NECESARIO
+
 public class PasajeroController {
     Utils utils = new Utils();
     PasajeroDao pasajeroDao;
